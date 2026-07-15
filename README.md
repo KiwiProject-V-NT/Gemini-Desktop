@@ -1,10 +1,9 @@
-# Gemini-Desktop
-Desktop client for Google Gemini &amp; Workspace featuring DNS bypass, transparent overlay, and smooth border-wave animations.
-
-
 # Gemini Desktop
 
-Премиальное и функциональное десктопное приложение на базе Electron для удобной работы с **Google Gemini** и экосистемой сервисов **Google Workspace**.
+Десктопное приложение на базе Electron для удобной работы с **Google Gemini** и экосистемой сервисов **Google Workspace**.
+
+> ⚠️ **Дисклеймер:** Данное приложение является неофициальным open-source клиентом и не имеет никакого отношения к компании Google.
+
 
 ---
 
