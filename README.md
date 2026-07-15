@@ -7,6 +7,12 @@
 
 ---
 
+## Скриншоты 
+
+![Image](https://raw.githubusercontent.com/KiwiProject-V-NT/Gemini-Desktop/main/readme-files/one.png)
+
+
+
 ## Основные возможности
 
 *   🌐 **Обход региональных ограничений (Smart DNS):**
