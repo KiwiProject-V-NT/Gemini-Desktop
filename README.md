@@ -43,7 +43,7 @@
 
 ### Готовая сборка
 
-* https://github.com/KiwiProject-V-NT/Gemini-Desktop/releases
+*   [Release](https://github.com/KiwiProject-V-NT/Gemini-Desktop/releases)
 
 
 ### Требования
