@@ -41,6 +41,11 @@
 
 ## Установка и запуск
 
+### Готовая сборка
+
+* https://github.com/KiwiProject-V-NT/Gemini-Desktop/releases
+
+
 ### Требования
 *   Установленный [Node.js](https://nodejs.org/) (рекомендуется LTS версия).
 
