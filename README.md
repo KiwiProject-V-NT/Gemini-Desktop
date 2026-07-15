@@ -11,7 +11,7 @@
 
 ![Image](https://raw.githubusercontent.com/KiwiProject-V-NT/Gemini-Desktop/main/readme-files/one.png)
 ![Image](https://raw.githubusercontent.com/KiwiProject-V-NT/Gemini-Desktop/main/readme-files/two.png)
-<video src="https://raw.githubusercontent.com/KiwiProject-V-NT/Gemini-Desktop/main/readme-files/three(1).mp4" width="100%" controls></video>
+![Посмотреть Видео | Video](https://raw.githubusercontent.com/KiwiProject-V-NT/Gemini-Desktop/main/readme-files/three(1).mp4)
 
 
 
