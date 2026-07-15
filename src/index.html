@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Gemini Desktop</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <!-- Custom Title Bar -->
+  <header id="titlebar">
+    <div class="drag-region">
+      <div class="app-logo">
+        <svg viewBox="0 0 24 24" width="16" height="16">
+          <path fill="url(#gemini-gradient)" d="M12,2L14.8,9.2L22,12L14.8,14.8L12,22L9.2,14.8L2,12L9.2,9.2L12,2Z" />
+          <defs>
+            <linearGradient id="gemini-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#4e82f7" />
+              <stop offset="50%" stop-color="#b06ef7" />
+              <stop offset="100%" stop-color="#e2536d" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <span class="app-title">Gemini Desktop</span>
+    </div>
+    <div class="window-controls">
+      <button id="btn-toggle-services" title="Показать/скрыть сервисы">
+        <svg viewBox="0 0 10 10" width="10" height="10">
+          <rect x="1" y="1" width="3" height="3" fill="#fff"/>
+          <rect x="6" y="1" width="3" height="3" fill="#fff"/>
+          <rect x="1" y="6" width="3" height="3" fill="#fff"/>
+          <rect x="6" y="6" width="3" height="3" fill="#fff"/>
+        </svg>
+      </button>
+      <button id="btn-minimize" title="Свернуть">
+        <svg viewBox="0 0 10 1" width="10" height="1"><rect width="10" height="1" fill="#fff" /></svg>
+      </button>
+      <button id="btn-maximize" title="Развернуть">
+        <svg viewBox="0 0 10 10" width="10" height="10"><rect x="1" y="1" width="8" height="8" fill="none" stroke="#fff" stroke-width="1"/></svg>
+      </button>
+      <button id="btn-close" class="close-btn" title="Закрыть в трей">
+        <svg viewBox="0 0 10 10" width="10" height="10"><path d="M1,1 L9,9 M9,1 L1,9" stroke="#fff" stroke-width="1.2"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Webviews Container -->
+  <main id="webview-container">
+    <webview 
+      id="gemini-view" 
+      src="https://gemini.google.com" 
+      useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0"
+      allowpopups
+    ></webview>
+    <webview 
+      id="services-view" 
+      src="about:blank" 
+      useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0"
+      allowpopups
+      style="display: none;"
+    ></webview>
+
+    <!-- Google Services Selection Dashboard Grid -->
+    <div id="services-hub" style="display: none;">
+      <h2 class="hub-title">Выберите сервис Google</h2>
+      <div class="hub-grid">
+        <div class="hub-card" data-service="gmail" data-url="https://mail.google.com">
+          <div class="hub-icon-wrapper gmail">
+            <svg viewBox="0 0 24 24" width="28" height="28">
+              <path fill="#ea4335" d="M20,4H4C2.9,4 2,4.9 2,6V18C2,19.1 2.9,20 4,20H20C21.1,20 22,19.1 22,18V6C22,4.9 21.1,4 20,4M20,8L12,13L4,8V6L12,11L20,6V8Z" />
+            </svg>
+          </div>
+          <h3>Gmail</h3>
+          <p>Электронная почта и папка Входящие</p>
+        </div>
+
+        <div class="hub-card" data-service="search" data-url="https://www.google.com">
+          <div class="hub-icon-wrapper search">
+            <svg viewBox="0 0 24 24" width="28" height="28">
+              <path fill="#4285f4" d="M15.5,14h-.79l-.28-.27C15.41,12.59,16,11.11,16,9.5,16,5.91,13.09,3,9.5,3,5.91,3,3,5.91,3,9.5,3,13.09,5.91,16,9.5,16c1.61,0,3.09-.59,4.23-1.57l.27.28v.79l5,4.99L20.49,19l-4.99-5zm-6,0C7.01,14,5,11.99,5,9.5S7.01,5,9.5,5,14,7.01,14,9.5,11.99,14,9.5,14z" />
+            </svg>
+          </div>
+          <h3>Поиск</h3>
+          <p>Поиск информации в Интернете</p>
+        </div>
+
+        <div class="hub-card" data-service="notebooklm" data-url="https://notebooklm.google.com">
+          <div class="hub-icon-wrapper notebooklm">
+            <svg viewBox="0 0 24 24" width="28" height="28">
+              <path fill="#00acc1" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" />
+            </svg>
+          </div>
+          <h3>NotebookLM</h3>
+          <p>ИИ-блокнот для работы с материалами</p>
+        </div>
+
+        <div class="hub-card" data-service="youtube" data-url="https://www.youtube.com">
+          <div class="hub-icon-wrapper youtube">
+            <svg viewBox="0 0 24 24" width="28" height="28">
+              <path fill="#ff0000" d="M10,15L15.19,12L10,9V15M21.56,7.11C21.72,7.72 21.84,8.68 21.92,10C22,11.31 22,12.19 22,12.65C22,13.11 22,13.99 21.92,15.3C21.84,16.62 21.72,17.58 21.56,18.19C21.38,18.9 20.91,19.37 20.2,19.56C19.59,19.72 18.08,19.84 15.65,19.92C13.22,20 12,20 12,20C12,20 10.78,20 8.35,19.92C5.92,19.84 4.41,19.72 3.8,19.56C3.09,19.37 2.62,18.9 2.44,18.19C2.28,17.58 2.16,16.62 2.08,15.3C2,13.99 2,13.11 2,12.65C2,12.11 2,11.31 2.08,10C2.16,8.68 2.28,7.72 2.44,7.11C2.62,6.4 3.09,5.93 3.8,5.74C4.41,5.58 5.92,5.46 8.35,5.38C10.78,5.31 12,5.31 12,5.31C12,5.31 13.22,5.31 15.65,5.38C18.08,5.46 19.59,5.58 20.2,5.74C20.91,5.93 21.38,6.4 21.56,7.11Z" />
+            </svg>
+          </div>
+          <h3>YouTube</h3>
+          <p>Мировой видеохостинг и медиаплатформа</p>
+        </div>
+
+        <div class="hub-card" data-service="translate" data-url="https://translate.google.com">
+          <div class="hub-icon-wrapper translate">
+            <svg viewBox="0 0 24 24" width="28" height="28">
+              <path fill="#1a73e8" d="M12.87,15.07L10.33,12.56L10.24,12.47C12.1,10.39 13.42,8 14.21,5.5H18V3.5H11V1.5H9V3.5H2V5.5H12.17C11.46,7.44 10.35,9.28 9,11C8.16,10.05 7.45,9 6.89,8H4.89C5.55,9.47 6.47,10.87 7.61,12.21L2.83,16.97L4.24,18.38L9,13.62L11.87,16.5L12.87,15.07M18.5,10H16.5L12,22H14L15.12,19H19.88L21,22H23L18.5,10M15.88,17L17.5,12.67L19.12,17H15.88Z" />
+            </svg>
+          </div>
+          <h3>Переводчик</h3>
+          <p>Интеллектуальный перевод текстов</p>
+        </div>
+
+        <div class="hub-card" data-service="calendar" data-url="https://calendar.google.com">
+          <div class="hub-icon-wrapper calendar">
+            <svg viewBox="0 0 24 24" width="28" height="28">
+              <path fill="#4285f4" d="M19,4H18V2H16V4H8V2H6V4H5C3.89,4 3,4.9 3,6V20A2,2 0 0,0 5,22H19A2,2 0 0,0 21,20V6A2,2 0 0,0 19,4M19,20H5V9H19V20M5,7V6H19V7H5Z" />
+            </svg>
+          </div>
+          <h3>Календарь</h3>
+          <p>Планирование расписания и задач</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Lock Click-Through Indicator -->
+    <div id="lock-overlay" class="lock-overlay" style="display: none;">
+      <div class="lock-card">
+        <svg viewBox="0 0 24 24" width="20" height="20">
+          <path fill="#b06ef7" d="M18,8H17V6A5,5 0 0,0 12,1A5,5 0 0,0 7,6V8H6A2,2 0 0,0 4,10V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V10A2,2 0 0,0 18,8M9,6A3,3 0 0,1 12,3A3,3 0 0,1 15,6V8H9V6M12,17A2,2 0 0,1 10,15A2,2 0 0,1 12,13A2,2 0 0,1 14,15A2,2 0 0,1 12,17Z" />
+        </svg>
+        <span>Управление заблокировано. Нажмите <strong>Ctrl+Shift+L</strong> для разблокировки.</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <footer id="bottom-bar">
+    <!-- Left balancing section for perfect mathematical centering of tabs -->
+    <div class="bar-section" style="width: 100px; justify-content: flex-start;">
+      <button id="btn-home" class="icon-btn" title="Домой">
+        <svg viewBox="0 0 24 24" width="18" height="18">
+          <path fill="currentColor" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Center Navigation Tabs -->
+    <div class="bar-section app-tabs">
+      <button id="tab-gemini" class="tab-btn active" title="Gemini">
+        <svg class="glow-icon" viewBox="0 0 24 24" width="20" height="20">
+          <path fill="url(#gemini-gradient)" d="M12,2L14.8,9.2L22,12L14.8,14.8L12,22L9.2,14.8L2,12L9.2,9.2L12,2Z" />
+        </svg>
+        <span>Gemini</span>
+      </button>
+      <button id="tab-services" class="tab-btn" title="Сервисы">
+        <svg viewBox="0 0 24 24" width="20" height="20">
+          <path fill="#b06ef7" class="glow-icon" d="M4,11H10V4H4V11M4,20H10V13H4V20M13,20H19V13H13V20M13,4V11H19V4H13Z" />
+        </svg>
+        <span>Сервисы</span>
+      </button>
+    </div>
+
+    <!-- Right Controls (Settings & Always on Top) -->
+    <div class="bar-section settings-controls" style="width: 100px; justify-content: flex-end;">
+      <button id="btn-pin" class="icon-btn" title="Закрепить (Оверлей)">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M16,12V4H17V2H7V4H8V12L6,14V16H11.2V22H12.8V16H18V14L16,12M8.8,14L10,12.8V4H14V12.8L15.2,14H8.8Z" /></svg>
+      </button>
+      <button id="btn-settings" class="icon-btn" title="Настройки">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.47,5.34 14.86,5.08L14.47,2.42C14.43,2.18 14.22,2 13.97,2H9.97C9.72,2 9.51,2.18 9.47,2.42L9.08,5.08C8.47,5.34 7.9,5.66 7.38,6.05L4.89,5.05C4.67,4.96 4.4,5.05 4.28,5.27L2.28,8.73C2.16,8.95 2.21,9.22 2.4,9.37L4.51,11C4.47,11.34 4.5,11.67 4.5,12C4.5,12.33 4.47,12.65 4.51,12.97L2.4,14.63C2.21,14.78 2.16,15.05 2.28,15.27L4.28,18.73C4.4,18.95 4.67,19.04 4.89,18.95L7.38,17.95C7.9,18.34 8.47,18.66 9.08,18.92L9.47,21.58C9.51,21.82 9.72,22 9.97,22H13.97C14.22,22 14.43,21.82 14.47,21.58L14.86,18.92C15.47,18.66 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.04 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" /></svg>
+      </button>
+    </div>
+  </footer>
+
+  <!-- Settings Slide-up Panel -->
+  <div id="settings-panel" class="slide-panel">
+    <div class="panel-header">
+      <h3>Настройки приложения</h3>
+      <button id="btn-close-settings" class="close-panel-btn">
+        <svg viewBox="0 0 10 10" width="12" height="12"><path d="M1,1 L9,9 M9,1 L1,9" stroke="#fff" stroke-width="1.5"/></svg>
+      </button>
+    </div>
+    <div class="panel-body">
+      <!-- DNS Settings -->
+      <div class="setting-group">
+        <label class="setting-title">Обход ограничений (Smart DNS)</label>
+        <p class="setting-desc">Выберите режим настройки DNS для обхода блокировок Google Gemini</p>
+        <div class="dns-options">
+          <label class="radio-card">
+            <input type="radio" name="dns-mode" value="system">
+            <span class="radio-label">
+              <strong>Системный</strong>
+              <span>Без обхода ограничений (по умолчанию)</span>
+            </span>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="dns-mode" value="doh">
+            <span class="radio-label">
+              <strong>Secure DNS (DoH)</strong>
+              <span>Нативный DoH через xbox-dns.ru</span>
+            </span>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="dns-mode" value="proxy">
+            <span class="radio-label">
+              <strong>Локальный Прокси</strong>
+              <span>Локальный редирект через 111.88.96.50</span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Opacity Settings -->
+      <div class="setting-group">
+        <label class="setting-title">Прозрачность в режиме оверлея</label>
+        <p class="setting-desc">Регулирует прозрачность окна при активации функции "Поверх всех окон"</p>
+        <div class="slider-container">
+          <input type="range" id="opacity-slider" min="0.2" max="1.0" step="0.05" value="0.9">
+          <span id="opacity-value">90%</span>
+        </div>
+      </div>
+      
+      <div class="panel-footer">
+        <span class="config-path-text">Конфигурация: AppData/config.json</span>
+        <button id="btn-save-settings" class="primary-btn">Сохранить</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

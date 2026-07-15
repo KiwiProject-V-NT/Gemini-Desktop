@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Screen Glow Overlay</title>
+  <style>
+    :root {
+      --color-start: #4e82f7;
+      --color-mid: #b06ef7;
+      --color-end: #e2536d;
+      --glow-color: rgba(176, 110, 247, 0.75);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: transparent !important;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .glow-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    #border-path {
+      stroke-linecap: round;
+      opacity: 0;
+      filter: drop-shadow(0 0 10px var(--color-mid));
+      transition: opacity 0.2s ease;
+    }
+
+    /* Large glowing blurred orb centered on the front of the line */
+    .glow-orb {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--glow-color) 0%, rgba(0, 0, 0, 0) 70%);
+      filter: blur(55px);
+      opacity: 0;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 10;
+      mix-blend-mode: screen;
+    }
+
+    /* Color configurations based on parameters */
+    body.glow-gemini {
+      --color-start: #4e82f7;
+      --color-mid: #b06ef7;
+      --color-end: #e2536d;
+      --glow-color: rgba(176, 110, 247, 0.85);
+    }
+
+    body.glow-gmail {
+      --color-start: #ea4335;
+      --color-mid: #ff6b6b;
+      --color-end: #ea4335;
+      --glow-color: rgba(234, 67, 53, 0.85);
+    }
+
+    body.glow-search {
+      --color-start: #4285f4;
+      --color-mid: #ea4335;
+      --color-end: #34a853;
+      --glow-color: rgba(66, 133, 244, 0.85);
+    }
+
+    body.glow-notebooklm {
+      --color-start: #00796b;
+      --color-mid: #00acc1;
+      --color-end: #00796b;
+      --glow-color: rgba(0, 172, 193, 0.85);
+    }
+
+    body.glow-youtube {
+      --color-start: #ff0000;
+      --color-mid: #cc0000;
+      --color-end: #282828;
+      --glow-color: rgba(255, 0, 0, 0.85);
+    }
+
+    body.glow-translate {
+      --color-start: #1a73e8;
+      --color-mid: #aecbfa;
+      --color-end: #1a73e8;
+      --glow-color: rgba(26, 115, 232, 0.85);
+    }
+
+    body.glow-calendar {
+      --color-start: #1a73e8;
+      --color-mid: #34a853;
+      --color-end: #1a73e8;
+      --glow-color: rgba(26, 115, 232, 0.8);
+    }
+
+    body.glow-drive {
+      --color-start: #ffba00;
+      --color-mid: #00832d;
+      --color-end: #2684fc;
+      --glow-color: rgba(38, 132, 252, 0.8);
+    }
+  </style>
+</head>
+<body>
+  <div id="orb" class="glow-orb"></div>
+
+  <svg class="glow-svg">
+    <defs>
+      <linearGradient id="line-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="var(--color-start)" />
+        <stop offset="50%" stop-color="var(--color-mid)" />
+        <stop offset="100%" stop-color="var(--color-end)" />
+      </linearGradient>
+    </defs>
+    <!-- Rounded rect layout offset to prevent cutoffs -->
+    <rect id="border-path" x="15" y="15" rx="35" ry="35" fill="none" stroke="url(#line-grad)" stroke-width="5" />
+  </svg>
+
+  <script>
+    // Theme setter
+    const params = new URLSearchParams(window.location.search);
+    const color = params.get('color') || 'gemini';
+    document.body.classList.add(`glow-${color}`);
+
+    const orb = document.getElementById('orb');
+    const path = document.getElementById('border-path');
+
+    // Resize SVG path dynamically
+    function resizePath() {
+      path.setAttribute('width', window.innerWidth - 30);
+      path.setAttribute('height', window.innerHeight - 30);
+    }
+    window.addEventListener('resize', resizePath);
+    resizePath();
+
+    // Setup linear path trace animation
+    const duration = 2800; // 2.8 seconds sweep duration
+    let startTime = null;
+    const totalLength = path.getTotalLength();
+
+    // Initial dash settings
+    path.style.strokeDasharray = `0 ${totalLength}`;
+    path.style.strokeDashoffset = 0;
+
+    function animate(timestamp) {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      const currentLength = progress * totalLength;
+
+      // Update position along SVG path geometry (incorporates rx/ry rounding)
+      const point = path.getPointAtLength(currentLength);
+      orb.style.left = `${point.x}px`;
+      orb.style.top = `${point.y}px`;
+
+      // Draw a trailing segment of 250px that moves WITH the orb and never goes ahead
+      const trailLength = 300; // length of the neon trail
+      if (currentLength < trailLength) {
+        path.style.strokeDasharray = `${currentLength} ${totalLength}`;
+        path.style.strokeDashoffset = 0;
+      } else {
+        path.style.strokeDasharray = `${trailLength} ${totalLength}`;
+        path.style.strokeDashoffset = `${-(currentLength - trailLength)}`;
+      }
+
+      // Smooth opacity transitions
+      let opacity = 1;
+      if (progress < 0.08) {
+        opacity = progress / 0.08;
+      } else if (progress > 0.92) {
+        opacity = (1 - progress) / 0.08;
+      }
+
+      orb.style.opacity = opacity;
+      path.style.opacity = opacity;
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    }
+
+    // Wait slightly to let window load layout cleanly
+    setTimeout(() => {
+      requestAnimationFrame(animate);
+    }, 100);
+  </script>
+</body>
+</html>

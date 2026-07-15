@@ -1,0 +1,29 @@
+{
+  "name": "gemini-desktop-app",
+  "version": "1.0.0",
+  "description": "Desktop wrapper for Gemini and Gmail with smart DNS bypass and overlay features",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win"
+  },
+  "keywords": [],
+  "author": "KiwiProject NT",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^31.2.0",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "com.kiwiproject.geminiapp",
+    "productName": "Gemini Desktop",
+    "copyright": "Copyright © 2026 KiwiProject NT",
+    "win": {
+      "target": "portable",
+      "icon": "src/icon.png"
+    },
+    "directories": {
+      "output": "dist"
+    }
+  }
+}

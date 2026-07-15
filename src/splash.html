@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Gemini App</title>
+  <style>
+    :root {
+      --aurora-gradient: linear-gradient(135deg, #4e82f7 0%, #b06ef7 50%, #e2536d 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: transparent !important;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .splash-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .logo-container {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .aurora-glow {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: var(--aurora-gradient);
+      filter: blur(40px);
+      opacity: 0.7;
+      animation: rotate-glow 5s infinite linear;
+    }
+
+    .logo-svg {
+      z-index: 10;
+      filter: drop-shadow(0 0 15px rgba(176, 110, 247, 0.9));
+      animation: pulse-logo 2.5s infinite ease-in-out;
+    }
+
+    @keyframes rotate-glow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse-logo {
+      0%, 100% { transform: scale(1.0); }
+      50% { transform: scale(1.1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="splash-container">
+    <div class="logo-container">
+      <div class="aurora-glow"></div>
+      <svg class="logo-svg" viewBox="0 0 24 24" width="120" height="120">
+        <path fill="url(#splash-gradient)" d="M12,2L14.8,9.2L22,12L14.8,14.8L12,22L9.2,14.8L2,12L9.2,9.2L12,2Z" />
+        <defs>
+          <linearGradient id="splash-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#4e82f7" />
+            <stop offset="50%" stop-color="#b06ef7" />
+            <stop offset="100%" stop-color="#e2536d" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  </div>
+</body>
+</html>

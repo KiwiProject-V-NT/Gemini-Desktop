@@ -1,0 +1,10 @@
+{
+  "dnsMode": "doh",
+  "alwaysOnTop": false,
+  "overlayOpacity": 1.0,
+  "window": {
+    "width": 1200,
+    "height": 800,
+    "isMaximized": false
+  }
+}
