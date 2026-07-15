@@ -11,7 +11,7 @@
 
 ![Image](https://raw.githubusercontent.com/KiwiProject-V-NT/Gemini-Desktop/main/readme-files/one.png)
 ![Image](https://raw.githubusercontent.com/KiwiProject-V-NT/Gemini-Desktop/main/readme-files/two.png)
-![Image](https://raw.githubusercontent.com/KiwiProject-V-NT/Gemini-Desktop/main/readme-files/three.mp4)
+![Image](https://raw.githubusercontent.com/KiwiProject-V-NT/Gemini-Desktop/main/readme-files/three(1).mp4)
 
 
 
